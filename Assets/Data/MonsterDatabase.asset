@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278c30e33d85461f8a964d840cf0e992, type: 3}
   m_Name: MonsterDatabase
   m_EditorClassIdentifier: 
-  _viewPrefab: {fileID: 0}
-  _monsterData: []
+  _viewPrefab: {fileID: 8384861624584057704, guid: ec64f66f11dcae94280b7a575d3dee97,
+    type: 3}
+  _monsterData:
+  - _monsterType: 0
+    _maxHp: 40
+    _damage: 5
+    _defense: 0.1
+    _moveSpeed: 3
+    _monsterSprite: {fileID: 21300000, guid: f7be100ed230d6e4cb58e7397ed895b2, type: 3}

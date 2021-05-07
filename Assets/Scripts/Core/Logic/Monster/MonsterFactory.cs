@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Data.Monster;
+using Core.Utils;
 using Core.Views;
 using UnityEngine;
 
@@ -9,11 +10,13 @@ namespace Core.Logic.Monster
 	{
 		private readonly MonsterView _viewPrefab;
 		private readonly IDictionary<MonsterType, IMonsterData> _monsters;
+		private readonly GameObjectPool<MonsterView> _monsterPool;
 
 		public MonsterFactory(IMonsterDatabase monsterDatabase)
 		{
 			_viewPrefab = monsterDatabase.ViewPrefab;
 			_monsters = monsterDatabase.GetMonsterData();
+			_monsterPool = new GameObjectPool<MonsterView>();
 		}
 		
 		public MonsterView CreateMonster(MonsterType monsterType)
@@ -24,9 +27,16 @@ namespace Core.Logic.Monster
 				return null;
 			}
 			
-			var view = Object.Instantiate(_viewPrefab);
-			view.Init(monsterData);
-			return view;
+			return CreateMonster(monsterData);
+		}
+
+		private MonsterView CreateMonster(IMonsterData monsterData)
+		{
+			if (!_monsterPool.TryGetObject(out var monsterView))
+				monsterView = Object.Instantiate(_viewPrefab);
+			
+			monsterView.Init(monsterData);
+			return monsterView;
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Core.Data.Monster
 		[SerializeField] private MonsterType _monsterType;
 		[SerializeField] private int _maxHp;
 		[SerializeField] private int _damage;
-		[SerializeField] private float _defense;
+		[SerializeField, Range(0f, 1f)] private float _defense;
 		[SerializeField] private float _moveSpeed;
 		[SerializeField] private Sprite _monsterSprite;
 
