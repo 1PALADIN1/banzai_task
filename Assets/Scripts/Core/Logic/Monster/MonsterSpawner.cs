@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Data.Monster;
+using Core.Logic.Scene;
 using Core.Views;
 using UnityEngine;
 using Zenject;
@@ -14,12 +15,14 @@ namespace Core.Logic.Monster
 		private readonly HashSet<MonsterView> _sceneMonsterViews = new HashSet<MonsterView>();
 		
 		private IMonsterFactory _monsterFactory;
+		private ISceneController _sceneController;
 		private int _monsterSize;
 		
 		[Inject]
-		public void Init(IMonsterFactory monsterFactory)
+		public void Init(IMonsterFactory monsterFactory, ISceneController sceneController)
 		{
 			_monsterFactory = monsterFactory;
+			_sceneController = sceneController;
 			_monsterSize = 0;
 		}
 
@@ -68,8 +71,8 @@ namespace Core.Logic.Monster
 		{
 			if (Input.GetKeyDown(KeyCode.P))
 			{
-				CreateMonster(new Vector2(Random.Range(-5, 5), 
-					Random.Range(-5, 5)));
+				var spawnPoint = _sceneController.GetRandomPointOutOfScene();
+				CreateMonster(spawnPoint);
 			}
 		}
 	}
