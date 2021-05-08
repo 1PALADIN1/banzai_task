@@ -6,5 +6,6 @@ namespace Core.Logic.Monster
 	public interface IMonsterFactory
 	{
 		MonsterView CreateMonster(MonsterType monsterType);
+		void Release(MonsterView monsterView);
 	}
 }

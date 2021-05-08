@@ -492,3 +492,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed65643c89a422b82966823b9769c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxMonsterSize: 10
+  _spawnMonsters: 000000000100000002000000

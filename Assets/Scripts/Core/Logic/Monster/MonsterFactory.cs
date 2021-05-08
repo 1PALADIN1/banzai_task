@@ -30,6 +30,11 @@ namespace Core.Logic.Monster
 			return CreateMonster(monsterData);
 		}
 
+		public void Release(MonsterView monsterView)
+		{
+			_monsterPool.Release(monsterView);
+		}
+
 		private MonsterView CreateMonster(IMonsterData monsterData)
 		{
 			if (!_monsterPool.TryGetObject(out var monsterView))

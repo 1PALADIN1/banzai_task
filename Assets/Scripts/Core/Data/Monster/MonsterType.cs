@@ -2,6 +2,8 @@
 {
 	public enum MonsterType
 	{
-		Orc
+		Orc,
+		Barbarian,
+		Rex
 	}
 }
