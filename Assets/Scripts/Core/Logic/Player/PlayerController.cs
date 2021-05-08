@@ -23,6 +23,7 @@ namespace Core.Logic.Player
 			_sceneController.GameStarted += OnGameStarted;
 			_inputController.MoveAxisStateChanged += OnMoveAxisStateChanged;
 			_inputController.RotateAxisStateChanged += OnRotateAxisStateChanged;
+			_inputController.GunChanged += OnGunChanged;
 		}
 		
 		private void OnGameStarted()
@@ -47,11 +48,24 @@ namespace Core.Logic.Player
 			_playerView.SetRotateDirection(axis);
 		}
 
+		private void OnGunChanged(int direction)
+		{
+			if (!_sceneController.IsGameStarted)
+				return;
+			
+			if (direction > 0)
+				_playerView.SetNextGun();
+			
+			if (direction < 0)
+				_playerView.SetPreviousGun();
+		}
+
 		private void OnDestroy()
 		{
 			_sceneController.GameStarted -= OnGameStarted;
 			_inputController.MoveAxisStateChanged -= OnMoveAxisStateChanged;
 			_inputController.RotateAxisStateChanged -= OnRotateAxisStateChanged;
+			_inputController.GunChanged -= OnGunChanged;
 		}
 	}
 }

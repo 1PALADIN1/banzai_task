@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f626b7f78b41e6a579fda5a88dd86d, type: 3}
   m_Name: GunDatabase
   m_EditorClassIdentifier: 
-  _view: {fileID: 0}
-  _damage: 0
+  _guns:
+  - _damage: 20
+    _cooldownTime: 0.5
+    _gunSprite: {fileID: 21300000, guid: 49785875cec9c4007b0411648d72e800, type: 3}
+  - _damage: 40
+    _cooldownTime: 1
+    _gunSprite: {fileID: 21300000, guid: 96b2210e147ce47f9b9425a4d0775f6c, type: 3}
+  - _damage: 10
+    _cooldownTime: 0.2
+    _gunSprite: {fileID: 21300000, guid: f2498d21361294a38a991059341497cb, type: 3}

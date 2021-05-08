@@ -6,6 +6,8 @@ namespace Core.Logic.GameInput
     public sealed class InputController : MonoBehaviour, IInputController
     {
         private const float InputPrecision = 0.001f;
+        private const int ChangeGunForward = 1;
+        private const int ChangeGunBackward = -1;
         
         [Header("Tank control")]
         [SerializeField] private KeyCode _moveForwardKey = KeyCode.UpArrow;
@@ -20,7 +22,8 @@ namespace Core.Logic.GameInput
         private Vector2 _prevRotateAxis = Vector2.zero;
 
         public event Action<Vector2> MoveAxisStateChanged; 
-        public event Action<Vector2> RotateAxisStateChanged; 
+        public event Action<Vector2> RotateAxisStateChanged;
+        public event Action<int> GunChanged;
 
         private void Update()
         {
@@ -66,12 +69,16 @@ namespace Core.Logic.GameInput
 
         private void Fire()
         {
-            
+            //TODO
         }
 
         private void ChangeGun()
         {
+            if (Input.GetKeyDown(_changeGunForwardKey))
+                GunChanged?.Invoke(ChangeGunForward);
             
+            if (Input.GetKeyDown(_changeGunBackwardKey))
+                GunChanged?.Invoke(ChangeGunBackward);
         }
 
         private bool IsInputStateChanged(Vector2 prevValue, Vector2 newValue)

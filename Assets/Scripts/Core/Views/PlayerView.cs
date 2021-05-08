@@ -1,20 +1,37 @@
-﻿using Core.Data.Player;
+﻿using Core.Data.Gun;
+using Core.Data.Player;
 using UnityEngine;
 
 namespace Core.Views
 {
 	public sealed class PlayerView : MonoBehaviour
 	{
+		[SerializeField] private GunView _gunView;
+		
 		private IPlayerData _playerData;
+		private IGunData[] _guns;
+		
 		private Vector2 _moveDirection = Vector2.zero;
 		private Vector2 _rotateDirection = Vector2.zero;
 		private bool _isFireActive;
+		private int _currentGunIndex;
+		
 		private Transform _transform;
 		
-		public void Init(IPlayerData playerData)
+		public void Init(IPlayerData playerData, IGunData[] guns)
 		{
 			_playerData = playerData;
+			_guns = guns;
 			_transform = transform;
+			_currentGunIndex = 0;
+
+			if (_guns == null || _guns.Length == 0)
+			{
+				Debug.LogError("Guns are not specified!", this);
+				return;
+			}
+			
+			SetActiveGun(_currentGunIndex);
 		}
 
 		public void SetMoveDirection(Vector2 moveDirection)
@@ -30,6 +47,24 @@ namespace Core.Views
 		public void SetFireState(bool isFirActive)
 		{
 			_isFireActive = isFirActive;
+		}
+
+		public void SetNextGun()
+		{
+			_currentGunIndex++;
+			if (_currentGunIndex >= _guns.Length)
+				_currentGunIndex = 0;
+			
+			SetActiveGun(_currentGunIndex);
+		}
+
+		public void SetPreviousGun()
+		{
+			_currentGunIndex--;
+			if (_currentGunIndex < 0)
+				_currentGunIndex = _guns.Length - 1;
+			
+			SetActiveGun(_currentGunIndex);
 		}
 
 		private void Update()
@@ -63,6 +98,13 @@ namespace Core.Views
 			if (!_isFireActive)
 				return;
 			
+			_gunView.Fire();
+		}
+
+		private void SetActiveGun(int gunIndex)
+		{
+			var gunData = _guns[gunIndex];
+			_gunView.Init(gunData);
 		}
 	}
 }
