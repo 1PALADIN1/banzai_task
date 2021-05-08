@@ -24,6 +24,8 @@ namespace Core.Logic.Monster
 			_monsterFactory = monsterFactory;
 			_sceneController = sceneController;
 			_monsterSize = 0;
+
+			_sceneController.GameStarted += OnGameStarted;
 		}
 
 		private void CreateMonster(Vector2 spawnPosition)
@@ -50,12 +52,19 @@ namespace Core.Logic.Monster
 			return _spawnMonsters[randIndex];
 		}
 		
+		private void OnGameStarted()
+		{
+			//TODO: start spawn
+		}
+
 		private void OnDestroy()
 		{
 			foreach (var monsterView in _sceneMonsterViews)
 				monsterView.Destroyed -= OnMonsterDestroyed;
 			
 			_sceneMonsterViews.Clear();
+			
+			_sceneController.GameStarted -= OnGameStarted;
 		}
 
 		private void OnMonsterDestroyed(MonsterView monsterView)
@@ -73,6 +82,12 @@ namespace Core.Logic.Monster
 			{
 				var spawnPoint = _sceneController.GetRandomPointOutOfScene();
 				CreateMonster(spawnPoint);
+			}
+
+			if (Input.GetKeyDown(KeyCode.O))
+			{
+				if (!_sceneController.IsGameStarted)
+					_sceneController.StartGame();
 			}
 		}
 	}

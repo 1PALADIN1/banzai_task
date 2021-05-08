@@ -1,5 +1,8 @@
+using System;
 using Core.Views;
+using ModestTree;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Core.Logic.Scene
 {
@@ -19,12 +22,42 @@ namespace Core.Logic.Scene
             Vector2Int.left,
         };
 
+        public event Action GameStarted;
+        public event Action GameFinished;
+
+        public bool IsGameStarted { get; private set; }
+        public bool IsGameFinished { get; private set; }
+
         public SceneController(CameraView cameraView)
         {
             var (height, width) = cameraView.GetCameraSize();
             _sceneHalfHeight = height / 2f;
             _sceneHalfWidth = width / 2f;
             _cameraPosition = cameraView.Position;
+        }
+
+        public void StartGame()
+        {
+            if (IsGameStarted)
+            {
+                Log.Error("Game is already started!");
+                return;
+            }
+            
+            IsGameStarted = true;
+            GameStarted?.Invoke();
+        }
+
+        public void FinishGame()
+        {
+            if (IsGameFinished)
+            {
+                Log.Error("Game is already finished!");
+                return;
+            }
+            
+            IsGameFinished = true;
+            GameFinished?.Invoke();
         }
         
         public Vector2 GetRandomPointOutOfScene()

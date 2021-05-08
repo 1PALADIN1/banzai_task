@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf995decbd639c14e81fae9d2250169e, type: 3}
   m_Name: PlayerDatabase
   m_EditorClassIdentifier: 
-  _maxHp: 100
-  _defence: 0.1
-  _moveSpeed: 5
+  _viewPrefab: {fileID: 6577486368770243962, guid: 9a083cc660b65d743b29d6df449b9ae3,
+    type: 3}
+  _playerData:
+    _maxHp: 100
+    _defence: 0.15
+    _moveSpeed: 5
+    _rotateSpeed: 180

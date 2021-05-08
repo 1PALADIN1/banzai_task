@@ -8,6 +8,7 @@ namespace Core.Data.Player
 		int MaxHp { get; }
 		float Defence { get; }
 		float MoveSpeed { get; }
+		float RotateSpeed { get; }
 	}
 	
 	[Serializable]
@@ -16,9 +17,11 @@ namespace Core.Data.Player
 		[SerializeField] private int _maxHp;
         [SerializeField, Range(0f, 1f)] private float _defence;
         [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _rotateSpeed;
 
         public int MaxHp => _maxHp;
         public float Defence => _defence;
         public float MoveSpeed => _moveSpeed;
+        public float RotateSpeed => _rotateSpeed;
 	}
 }
