@@ -10,10 +10,11 @@ namespace Core.Logic
         private Vector2 _moveDirection;
         private bool _canMove;
         
-        public void Init(float moveSpeed, Vector2 moveDirection)
+        public bool IsMoving => _canMove;
+        
+        public void Init(float moveSpeed)
         {
             _moveSpeed = moveSpeed;
-            SetMoveDirection(moveDirection);
         }
         
         public void SetMoveDirection(Vector2 moveDirection)

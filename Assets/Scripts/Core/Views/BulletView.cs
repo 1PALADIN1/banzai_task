@@ -25,7 +25,8 @@ namespace Core.Views
 
             transform.up = bulletData.MoveDirection.normalized;
             _damageComponent.Init(bulletData.HitSide, bulletData.Damage);
-            _moveComponent.Init(MoveSpeed, bulletData.MoveDirection);
+            _moveComponent.Init(MoveSpeed);
+            _moveComponent.SetMoveDirection(bulletData.MoveDirection);
             gameObject.SetActive(true);
             
             _moveComponent.StartMoving();

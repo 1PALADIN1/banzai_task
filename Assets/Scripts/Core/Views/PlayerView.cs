@@ -1,5 +1,6 @@
 ﻿using Core.Data.Gun;
 using Core.Data.Player;
+using Core.Logic;
 using Core.Logic.Gun;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Core.Views
 	{
 		[SerializeField] private GunView _gunView;
 		[SerializeField] private LayerMask _hitSide;
+		[SerializeField] private HealthComponent _healthComponent;
 		
 		private IPlayerData _playerData;
 		private IGunData[] _guns;
@@ -19,6 +21,8 @@ namespace Core.Views
 		private int _currentGunIndex;
 		
 		private Transform _transform;
+
+		public HealthComponent HealthComponent => _healthComponent;
 		
 		public void Init(IPlayerData playerData, IGunData[] guns, IBulletSpawner bulletSpawner)
 		{
@@ -27,6 +31,7 @@ namespace Core.Views
 			_transform = transform;
 			_currentGunIndex = 0;
 			_gunView.Init(bulletSpawner, _hitSide);
+			_healthComponent.Init(playerData.MaxHp, playerData.Defence);
 
 			if (_guns == null || _guns.Length == 0)
 			{
@@ -90,7 +95,6 @@ namespace Core.Views
 		{
 			if (_rotateDirection == Vector2.zero)
 				return;
-
 
 			var rotateValue = -1 * Time.deltaTime * _playerData.RotateSpeed * _rotateDirection.x;
 			transform.rotation *= Quaternion.Euler(0f, 0f, rotateValue);

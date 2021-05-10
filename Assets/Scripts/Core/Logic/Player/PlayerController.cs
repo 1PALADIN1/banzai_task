@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Core.Logic.Player
 {
-	public sealed class PlayerController : MonoBehaviour
+	public class PlayerController : MonoBehaviour
 	{
 		private ISceneController _sceneController;
 		private IInputController _inputController;
@@ -30,6 +30,7 @@ namespace Core.Logic.Player
 		private void OnGameStarted()
 		{
 			_playerView = _playerFactory.CreatePlayer();
+			_playerView.HealthComponent.HealthChanged += OnPlayerHealthChanged;
 		}
 
 		private void OnMoveAxisStateChanged(Vector2 axis)
@@ -66,6 +67,15 @@ namespace Core.Logic.Player
 			_playerView.SetFireState(isFireActive);
 		}
 
+		private void OnPlayerHealthChanged(int healthValue)
+		{
+			if (healthValue > 0)
+				return;
+			
+			_playerView.gameObject.SetActive(false);
+			_sceneController.FinishGame();
+		}
+
 		private void OnDestroy()
 		{
 			_sceneController.GameStarted -= OnGameStarted;
@@ -73,6 +83,7 @@ namespace Core.Logic.Player
 			_inputController.RotateAxisStateChanged -= OnRotateAxisStateChanged;
 			_inputController.GunChanged -= OnGunChanged;
 			_inputController.FireStateChanged -= OnFireStateChanged;
+			_playerView.HealthComponent.HealthChanged -= OnPlayerHealthChanged;
 		}
 	}
 }

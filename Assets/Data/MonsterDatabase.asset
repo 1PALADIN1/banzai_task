@@ -19,17 +19,17 @@ MonoBehaviour:
     _maxHp: 40
     _damage: 5
     _defense: 0.1
-    _moveSpeed: 3
+    _moveSpeed: 0.5
     _monsterSprite: {fileID: 21300000, guid: f7be100ed230d6e4cb58e7397ed895b2, type: 3}
   - _monsterType: 1
     _maxHp: 60
     _damage: 4
     _defense: 0.3
-    _moveSpeed: 2
+    _moveSpeed: 0.25
     _monsterSprite: {fileID: 21300000, guid: c4142feae39a94339b882752e02715f2, type: 3}
   - _monsterType: 2
     _maxHp: 35
     _damage: 10
     _defense: 0
-    _moveSpeed: 6
+    _moveSpeed: 1
     _monsterSprite: {fileID: 21300000, guid: d11b359a5459f41418929d79ffa4bd4e, type: 3}

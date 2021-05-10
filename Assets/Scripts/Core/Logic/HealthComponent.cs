@@ -25,7 +25,6 @@ namespace Core.Logic
             
             _currentHp -= (int) (damage * (1f - _defence));
             _currentHp = Mathf.Clamp(_currentHp, 0, _maxHp);
-            Debug.Log($"Damage {damage} applied. Hp: {_currentHp} / {_maxHp}"); //TODO
             
             HealthChanged?.Invoke(_currentHp);
         }

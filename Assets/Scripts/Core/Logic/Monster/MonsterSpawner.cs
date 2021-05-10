@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Core.Data.Monster;
+﻿using Core.Data.Monster;
 using Core.Logic.Scene;
 using Core.Views;
 using UnityEngine;
@@ -10,85 +9,38 @@ namespace Core.Logic.Monster
 	public class MonsterSpawner : MonoBehaviour
 	{
 		[SerializeField] private int _maxMonsterSize = 10;
-		[SerializeField] private MonsterType[] _spawnMonsters;
-
-		private readonly HashSet<MonsterView> _activeMonsterViews = new HashSet<MonsterView>();
 		
 		private IMonsterFactory _monsterFactory;
-		private ISceneController _sceneController;
-		private int _monsterSize;
+		private int _activeMonstersNumber;
 		
 		[Inject]
 		public void Init(IMonsterFactory monsterFactory, ISceneController sceneController)
 		{
 			_monsterFactory = monsterFactory;
-			_sceneController = sceneController;
-			_monsterSize = 0;
-
-			_sceneController.GameStarted += OnGameStarted;
 		}
 
-		private void CreateMonster(Vector2 spawnPosition)
+		public bool TrySpawnMonster(MonsterType monsterType, Vector2 spawnPosition, out MonsterView monsterView)
 		{
-			if (_spawnMonsters.Length == 0)
+			if (_activeMonstersNumber >= _maxMonsterSize)
 			{
-				Debug.LogError("Spawn monster types are not specified!", this);
-				return;
+				monsterView = null;
+				return false;
 			}
 			
-			if (_monsterSize >= _maxMonsterSize)
-				return;
-
-			var monster = _monsterFactory.CreateMonster(GetRandomMonster());
+			_activeMonstersNumber++;
+			var monster = _monsterFactory.CreateMonster(monsterType);
 			monster.transform.position = spawnPosition;
-			_activeMonsterViews.Add(monster);
-			monster.Destroyed += OnMonsterDestroyed;
-			_monsterSize++;
-		}
-
-		private MonsterType GetRandomMonster()
-		{
-			var randIndex = Random.Range(0, _spawnMonsters.Length);
-			return _spawnMonsters[randIndex];
-		}
-		
-		private void OnGameStarted()
-		{
-			//TODO: start spawn
-		}
-
-		private void OnDestroy()
-		{
-			foreach (var monsterView in _activeMonsterViews)
-				monsterView.Destroyed -= OnMonsterDestroyed;
 			
-			_activeMonsterViews.Clear();
-			
-			_sceneController.GameStarted -= OnGameStarted;
+			monster.Destroyed += OnMonsterDestroyed; 
+			monsterView = monster;
+			return true;
 		}
 
 		private void OnMonsterDestroyed(MonsterView monsterView)
 		{
 			monsterView.Destroyed -= OnMonsterDestroyed;
-			_activeMonsterViews.Remove(monsterView);
 			_monsterFactory.Release(monsterView);
-			_monsterSize--;
-		}
-		
-		//TODO: debug
-		private void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.P))
-			{
-				var spawnPoint = _sceneController.GetRandomPointOutOfScene();
-				CreateMonster(spawnPoint);
-			}
-
-			if (Input.GetKeyDown(KeyCode.O))
-			{
-				if (!_sceneController.IsGameStarted)
-					_sceneController.StartGame();
-			}
+			_activeMonstersNumber--;
 		}
 	}
 }
