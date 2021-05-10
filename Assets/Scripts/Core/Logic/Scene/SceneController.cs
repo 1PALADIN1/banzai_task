@@ -81,6 +81,13 @@ namespace Core.Logic.Scene
             return new Vector2(x, y);
         }
 
+        public SceneBounds GetSceneBounds()
+        {
+            var leftBottomCorner = new Vector2(_cameraPosition.x - _sceneHalfWidth, _cameraPosition.y - _sceneHalfHeight);
+            var rightTopCorner = new Vector2(_cameraPosition.x + _sceneHalfWidth, _cameraPosition.y + _sceneHalfHeight);
+            return new SceneBounds(leftBottomCorner, rightTopCorner);
+        }
+
         private Vector2Int GetRandomPointDirection()
         {
             var randIndex = Random.Range(0, _pointDirections.Length);

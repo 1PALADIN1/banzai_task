@@ -15,5 +15,6 @@ namespace Core.Logic.Scene
         void FinishGame();
         
         Vector2 GetRandomPointOutOfScene();
+        SceneBounds GetSceneBounds();
     }
 }

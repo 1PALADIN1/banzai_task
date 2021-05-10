@@ -2,6 +2,7 @@
 using Core.Data.Player;
 using Core.Logic;
 using Core.Logic.Gun;
+using Core.Logic.Scene;
 using UnityEngine;
 
 namespace Core.Views
@@ -14,6 +15,7 @@ namespace Core.Views
 		
 		private IPlayerData _playerData;
 		private IGunData[] _guns;
+		private SceneBounds _sceneBounds;
 		
 		private Vector2 _moveDirection = Vector2.zero;
 		private Vector2 _rotateDirection = Vector2.zero;
@@ -24,11 +26,12 @@ namespace Core.Views
 
 		public HealthComponent HealthComponent => _healthComponent;
 		
-		public void Init(IPlayerData playerData, IGunData[] guns, IBulletSpawner bulletSpawner)
+		public void Init(IPlayerData playerData, IGunData[] guns, IBulletSpawner bulletSpawner, SceneBounds sceneBounds)
 		{
 			_playerData = playerData;
 			_guns = guns;
 			_transform = transform;
+			_sceneBounds = sceneBounds;
 			_currentGunIndex = 0;
 			_gunView.Init(bulletSpawner, _hitSide);
 			_healthComponent.Init(playerData.MaxHp, playerData.Defence);
@@ -88,7 +91,10 @@ namespace Core.Views
 				return;
 
 			var positionOffset = _transform.up * (Time.deltaTime * _playerData.MoveSpeed * _moveDirection.y);
-			_transform.position += new Vector3(positionOffset.x, positionOffset.y, 0f);
+			var nextPoint = _transform.position + new Vector3(positionOffset.x, positionOffset.y, 0f);
+			
+			if (!_sceneBounds.IsOutOfBounds(nextPoint))
+				_transform.position = nextPoint;
 		}
 
 		private void Rotate()
