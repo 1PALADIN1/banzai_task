@@ -1,5 +1,6 @@
 ﻿using Core.Data.Gun;
 using Core.Data.Player;
+using Core.Logic.Gun;
 using UnityEngine;
 
 namespace Core.Views
@@ -7,6 +8,7 @@ namespace Core.Views
 	public sealed class PlayerView : MonoBehaviour
 	{
 		[SerializeField] private GunView _gunView;
+		[SerializeField] private LayerMask _hitSide;
 		
 		private IPlayerData _playerData;
 		private IGunData[] _guns;
@@ -18,12 +20,13 @@ namespace Core.Views
 		
 		private Transform _transform;
 		
-		public void Init(IPlayerData playerData, IGunData[] guns)
+		public void Init(IPlayerData playerData, IGunData[] guns, IBulletSpawner bulletSpawner)
 		{
 			_playerData = playerData;
 			_guns = guns;
 			_transform = transform;
 			_currentGunIndex = 0;
+			_gunView.Init(bulletSpawner, _hitSide);
 
 			if (_guns == null || _guns.Length == 0)
 			{
@@ -104,7 +107,7 @@ namespace Core.Views
 		private void SetActiveGun(int gunIndex)
 		{
 			var gunData = _guns[gunIndex];
-			_gunView.Init(gunData);
+			_gunView.SetGun(gunData);
 		}
 	}
 }

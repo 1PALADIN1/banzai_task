@@ -20,10 +20,12 @@ namespace Core.Logic.GameInput
 
         private Vector2 _prevMoveAxis = Vector2.zero;
         private Vector2 _prevRotateAxis = Vector2.zero;
+        private bool _prevFireState;
 
         public event Action<Vector2> MoveAxisStateChanged; 
         public event Action<Vector2> RotateAxisStateChanged;
         public event Action<int> GunChanged;
+        public event Action<bool> FireStateChanged;
 
         private void Update()
         {
@@ -69,7 +71,13 @@ namespace Core.Logic.GameInput
 
         private void Fire()
         {
-            //TODO
+            var fireState = Input.GetKey(_fireKey);
+            
+            if (_prevFireState == fireState)
+                return;
+
+            _prevFireState = fireState;
+            FireStateChanged?.Invoke(fireState);
         }
 
         private void ChangeGun()

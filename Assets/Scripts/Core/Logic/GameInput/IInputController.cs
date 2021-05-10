@@ -8,5 +8,6 @@ namespace Core.Logic.GameInput
         event Action<Vector2> MoveAxisStateChanged;
         event Action<Vector2> RotateAxisStateChanged;
         event Action<int> GunChanged;
+        event Action<bool> FireStateChanged;
     }
 }

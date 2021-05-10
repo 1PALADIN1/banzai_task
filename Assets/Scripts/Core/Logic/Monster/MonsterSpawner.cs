@@ -12,7 +12,7 @@ namespace Core.Logic.Monster
 		[SerializeField] private int _maxMonsterSize = 10;
 		[SerializeField] private MonsterType[] _spawnMonsters;
 
-		private readonly HashSet<MonsterView> _sceneMonsterViews = new HashSet<MonsterView>();
+		private readonly HashSet<MonsterView> _activeMonsterViews = new HashSet<MonsterView>();
 		
 		private IMonsterFactory _monsterFactory;
 		private ISceneController _sceneController;
@@ -41,7 +41,7 @@ namespace Core.Logic.Monster
 
 			var monster = _monsterFactory.CreateMonster(GetRandomMonster());
 			monster.transform.position = spawnPosition;
-			_sceneMonsterViews.Add(monster);
+			_activeMonsterViews.Add(monster);
 			monster.Destroyed += OnMonsterDestroyed;
 			_monsterSize++;
 		}
@@ -59,10 +59,10 @@ namespace Core.Logic.Monster
 
 		private void OnDestroy()
 		{
-			foreach (var monsterView in _sceneMonsterViews)
+			foreach (var monsterView in _activeMonsterViews)
 				monsterView.Destroyed -= OnMonsterDestroyed;
 			
-			_sceneMonsterViews.Clear();
+			_activeMonsterViews.Clear();
 			
 			_sceneController.GameStarted -= OnGameStarted;
 		}
@@ -70,7 +70,7 @@ namespace Core.Logic.Monster
 		private void OnMonsterDestroyed(MonsterView monsterView)
 		{
 			monsterView.Destroyed -= OnMonsterDestroyed;
-			_sceneMonsterViews.Remove(monsterView);
+			_activeMonsterViews.Remove(monsterView);
 			_monsterFactory.Release(monsterView);
 			_monsterSize--;
 		}
