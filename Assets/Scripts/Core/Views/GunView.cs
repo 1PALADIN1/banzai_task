@@ -31,7 +31,7 @@ namespace Core.Views
 			
 			if (_restoreFireAbilityCoroutine != null)
 				StopCoroutine(_restoreFireAbilityCoroutine);
-			_canFire = true;
+			_restoreFireAbilityCoroutine = StartCoroutine(RestoreFireAbility(_gunData.CooldownTime));
 		}
 
 		public void Fire()

@@ -12,6 +12,7 @@ namespace Core.Logic.Player
 		private IInputController _inputController;
 		private IPlayerFactory _playerFactory;
 		private PlayerView _playerView;
+		private HealthComponent _playerHealthComponent;
 		
 		[Inject]
 		public void Init(IPlayerFactory playerFactory, ISceneController sceneController, IInputController inputController)
@@ -30,7 +31,8 @@ namespace Core.Logic.Player
 		private void OnGameStarted()
 		{
 			_playerView = _playerFactory.CreatePlayer();
-			_playerView.HealthComponent.HealthChanged += OnPlayerHealthChanged;
+			_playerHealthComponent = _playerView.HealthComponent; 
+			_playerHealthComponent.HealthChanged += OnPlayerHealthChanged;
 		}
 
 		private void OnMoveAxisStateChanged(Vector2 axis)
@@ -83,7 +85,9 @@ namespace Core.Logic.Player
 			_inputController.RotateAxisStateChanged -= OnRotateAxisStateChanged;
 			_inputController.GunChanged -= OnGunChanged;
 			_inputController.FireStateChanged -= OnFireStateChanged;
-			_playerView.HealthComponent.HealthChanged -= OnPlayerHealthChanged;
+			
+			if (_playerHealthComponent != null)
+				_playerHealthComponent.HealthChanged -= OnPlayerHealthChanged;
 		}
 	}
 }
