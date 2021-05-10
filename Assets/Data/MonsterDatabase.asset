@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278c30e33d85461f8a964d840cf0e992, type: 3}
+  m_Name: MonsterDatabase
+  m_EditorClassIdentifier: 
+  _viewPrefab: {fileID: 8384861624584057704, guid: ec64f66f11dcae94280b7a575d3dee97,
+    type: 3}
+  _monsterData:
+  - _monsterType: 0
+    _maxHp: 40
+    _damage: 5
+    _defense: 0.1
+    _moveSpeed: 0.5
+    _monsterSprite: {fileID: 21300000, guid: f7be100ed230d6e4cb58e7397ed895b2, type: 3}
+  - _monsterType: 1
+    _maxHp: 60
+    _damage: 4
+    _defense: 0.3
+    _moveSpeed: 0.25
+    _monsterSprite: {fileID: 21300000, guid: c4142feae39a94339b882752e02715f2, type: 3}
+  - _monsterType: 2
+    _maxHp: 35
+    _damage: 10
+    _defense: 0
+    _moveSpeed: 1
+    _monsterSprite: {fileID: 21300000, guid: d11b359a5459f41418929d79ffa4bd4e, type: 3}
