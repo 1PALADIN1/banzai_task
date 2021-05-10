@@ -7,10 +7,11 @@ using UnityEngine;
 
 namespace Core.Views
 {
-	public sealed class PlayerView : MonoBehaviour
+	public class PlayerView : MonoBehaviour
 	{
 		[SerializeField] private GunView _gunView;
 		[SerializeField] private LayerMask _hitSide;
+		[SerializeField] private Transform _rotateRoot;
 		[SerializeField] private HealthComponent _healthComponent;
 		
 		private IPlayerData _playerData;
@@ -90,7 +91,7 @@ namespace Core.Views
 			if (_moveDirection == Vector2.zero)
 				return;
 
-			var positionOffset = _transform.up * (Time.deltaTime * _playerData.MoveSpeed * _moveDirection.y);
+			var positionOffset = _rotateRoot.up * (Time.deltaTime * _playerData.MoveSpeed * _moveDirection.y);
 			var nextPoint = _transform.position + new Vector3(positionOffset.x, positionOffset.y, 0f);
 			
 			if (!_sceneBounds.IsOutOfBounds(nextPoint))
@@ -103,7 +104,7 @@ namespace Core.Views
 				return;
 
 			var rotateValue = -1 * Time.deltaTime * _playerData.RotateSpeed * _rotateDirection.x;
-			transform.rotation *= Quaternion.Euler(0f, 0f, rotateValue);
+			_rotateRoot.rotation *= Quaternion.Euler(0f, 0f, rotateValue);
 		}
 
 		private void Fire()

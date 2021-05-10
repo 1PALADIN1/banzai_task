@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Views
 {
-	public sealed class GunView : MonoBehaviour
+	public class GunView : MonoBehaviour
 	{
 		[SerializeField] private SpriteRenderer _spriteRenderer;
 		[SerializeField] private Transform _bulletSpawnPoint;

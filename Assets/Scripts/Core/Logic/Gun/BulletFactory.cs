@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core.Logic.Gun
 {
-    public sealed class BulletFactory : IBulletFactory
+    public class BulletFactory : IBulletFactory
     {
         private readonly IBulletDatabase _bulletDatabase;
         private readonly GameObjectPool<BulletView> _bulletPool;

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Logic.Monster
 {
-	public sealed class MonsterFactory : IMonsterFactory
+	public class MonsterFactory : IMonsterFactory
 	{
 		private readonly MonsterView _viewPrefab;
 		private readonly IDictionary<MonsterType, IMonsterData> _monsters;

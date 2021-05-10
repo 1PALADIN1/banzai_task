@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Core.Logic.Player
 {
-	public sealed class PlayerFactory : IPlayerFactory
+	public class PlayerFactory : IPlayerFactory
 	{
 		private readonly IPlayerDatabase _playerDatabase;
 		private readonly IGunDatabase _gunDatabase;

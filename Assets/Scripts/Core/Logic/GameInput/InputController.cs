@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.Logic.GameInput
 {
-    public sealed class InputController : MonoBehaviour, IInputController
+    public class InputController : MonoBehaviour, IInputController
     {
         private const float InputPrecision = 0.001f;
         private const int ChangeGunForward = 1;
